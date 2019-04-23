@@ -18,6 +18,27 @@ codes, result, request parameters, basically whatever you want to expose under t
 Refer project spring-micrometer-metric-grouping-sample for a sample implementation. The sample does not showcase additional 
 tags feature but can be easily implemented using the interface AdditionalTagsProvider and creating a Bean of implementation for the container
 
+__Dependency__
+```
+<dependency>
+    <groupId>com.iamsumeet</groupId>
+    <artifactId>spring-micrometer-metric-grouping-starter</artifactId>
+    <version>1.0</version>
+</dependency>
+```
+__Custom Repo__
+```
+<repositories>
+    <repository>
+        <id>spring-micrometer-metric-grouping-mvn-repo</id>
+        <url>https://raw.github.com/sumeetmondal/spring-micrometer-metric-grouping/mvn-repo/</url>
+        <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+        </snapshots>
+    </repository>
+</repositories>
+```
 ## Use cases:
 * __Case 1. At controller method level, without providing group name__
 ```
