@@ -55,7 +55,7 @@ public class MetricHttpServerTagsProvider implements WebMvcTagsProvider {
 
     private Iterable<Tag> getTagsWithNoFiltering(HttpServletRequest req, HttpServletResponse res, Object handler,
                                                  Throwable ex) {
-        return Tags.of(method(req), uri(req, res), status(res))
+        return Tags.of(method(req), uri(req, res), exception(ex), status(res),outcome(res))
                 .and(additionalTagsProvider.getAdditionalHttpServerTags(req, res, handler, ex));
     }
 
@@ -64,10 +64,10 @@ public class MetricHttpServerTagsProvider implements WebMvcTagsProvider {
         Tag uri = this.getUri(req, res);
 
         if ((uri == URI_OTHERS) || groupNames.contains(uri.getValue()))//groups and others will not have detailed metrics of all fields
-            return Tags.of(method(req), uri, status(res))
+            return Tags.of(method(req), uri, exception(ex), status(res),outcome(res))
                     .and(additionalTagsProvider.getAdditionalOthersHttpServerTags(req, res, handler, ex));
 
-        return Tags.of(method(req), uri, status(res)).
+        return Tags.of(method(req), uri, exception(ex), status(res),outcome(res)).
                 and(additionalTagsProvider.getAdditionalHttpServerTags(req, res, handler, ex));
     }
 

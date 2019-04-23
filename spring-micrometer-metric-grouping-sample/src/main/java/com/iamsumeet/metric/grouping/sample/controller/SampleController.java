@@ -25,13 +25,13 @@ public class SampleController {
     //Metric of this call will be captured in "others"
     @RequestMapping(value = "/helloYellow", method = RequestMethod.GET)
     public String getHelloYellow(){
-        return "Hello There! I am Yellow. My metric is being captured at grouped level";
+        return "Hello There! I am Yellow. My metric is being captured at grouped level OTHERS, as no groupname is mentioned for me";
     }
 
     //Metric of this call will be captured in "others"
     @RequestMapping(value = "/helloBlue", method = RequestMethod.GET)
     public String getHelloBlue(){
-        return "Hello There! I am Blue. My metric is being captured at grouped level";
+        return "Hello There! I am Blue. My metric is being captured at grouped level OTHERS, as no groupname is mentioned for me";
     }
 
     //Metric of this call will be captured in uri="redVarients"
