@@ -22,13 +22,13 @@ tags feature but can be easily implemented using the interface AdditionalTagsPro
 * __Case 1. At controller method level, without providing group name__
 ```
 @CaptureDetailedMetric
-@RequestMapping(value = { "/helloRed" }, method = RequestMethod.POST)
+@RequestMapping(value = { "/helloGreen" }, method = RequestMethod.POST)
 public @ResponseBody...
 ```
 calls to /helloRed will result in all metric being captured in detail at URI level, i.e. no grouping
 ```
-http_server_requests_seconds_count{method="POST",status="200",uri="/helloRed",} 1.0
-http_server_requests_seconds_sum{method="POST",status="200",uri="/helloRed",} 0.244990829
+http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/helloGreen",} 4.0
+http_server_requests_seconds_sum{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/helloGreen",} 0.014431887
 ```
 
 * __Case 2. At controller method level, with providing group name__
@@ -46,14 +46,16 @@ public String getHelloRed3(){
 calls to /helloRed3 and /helloRed4 will result in both metric data being captured in detail at group level, i.e. with grouping
 
 ```
-http_server_requests_seconds_count{method="POST",status="200",uri="redVarients",} 1.0
-http_server_requests_seconds_sum{method="POST",status="200",uri="redVarients",} 0.244990829
+http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="redVarients",} 9.0
+http_server_requests_seconds_sum{exception="None",method="GET",outcome="SUCCESS",status="200",uri="redVarients",} 0.184410881
 ```
 
-* __Case 3. CaptureDetailedMetric not annotated__
-All metrics will be captured against uri = “others”. Time and count data will be captured and aggregated against that common tag,  
-IMPORTANT: Grouping will be ignored incase of exceptions
-
+* __Case 3. CaptureDetailedMetric not annotated OR no groupname is mentioned in annotation__
+All metrics will be captured against uri = “others”. Time and count data will be captured and aggregated against that common tag, __IMPORTANT: Grouping will be overridden incase of exceptions and will be captured at individual uri level__
+```
+http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="others",} 46.0
+http_server_requests_seconds_sum{exception="None",method="GET",outcome="SUCCESS",status="200",uri="others",} 0.183989058
+```
 ###### Dev Notes:
 This functionality can also be achieved using Micrometer MetricFilter but it would require a lot of code duplication and 
 would have caused performance overhead as tags are created before filtering. Any additional tags newly introduced by micrometer can be added to the api by modifying MetricHttpServerTagsProvider and MetricHttpClientTagsProvider
