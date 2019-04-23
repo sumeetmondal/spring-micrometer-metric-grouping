@@ -22,8 +22,8 @@ tags feature but can be easily implemented using the interface AdditionalTagsPro
 * __Case 1. At controller method level, without providing group name__
 ```
 @CaptureDetailedMetric
-@RequestMapping(value = { "/helloGreen" }, method = RequestMethod.POST)
-public @ResponseBody...
+@RequestMapping(value = "/helloGreen", method = RequestMethod.GET)
+public String getHelloGreen()
 ```
 calls to /helloRed will result in all metric being captured in detail at URI level, i.e. no grouping
 ```
